@@ -1,8 +1,10 @@
-# Use Python 3.12 slim as the base image
 FROM python:3.12-slim
 
-# Install required dependencies (including libGL)
-RUN apt-get update && apt-get install -y libgl1-mesa-glx
+# Install required dependencies (including libGL and glib)
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -22,3 +24,4 @@ EXPOSE 8080
 
 # Command to run the Flask app
 CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
+2
